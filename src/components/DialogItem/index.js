@@ -1,33 +1,35 @@
 import React from "react";
 import classNames from "classnames";
-import { Time, IconReaded } from  "../";
+import { Time, IconReaded, Avatar } from  "../";
+import format from "date-fns/format";
+import isToday from "date-fns/isToday";
 
 import "./DialogItem.scss";
 
-const getAvatar = avatar => {
-    if(avatar) {
-        return <img src="https://images.unsplash.com/photo-1576657370318-135eabf07f4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=751&q=80" alt="" />
+const getMessageTime = created_at => {
+    if(isToday(created_at)) {
+        return format( created_at, 'kk:mm');
     } else {
-        // return makeavatar
+      return format( created_at, 'dd.MM.yyyy');
     }
 }
 
-const DialogItem = ({user, message, unreaded}) => (
+const DialogItem = ({user, message, unreaded, isMe}) => (
     <div className={classNames("dialogs__item", {"dialogs__item--online": user.isOnline})}>
         <div className="dialogs__item-avatar">
-            {getAvatar("https://images.unsplash.com/photo-1576657370318-135eabf07f4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=751&q=80")}
+            <Avatar user={user}/>
         </div>
         <div className="dialogs__item-info">
             <div className="dialogs__item-info-top">
-                <b>Ivan Fedorovitch</b>
+                <b>{user.fullName}</b>
                 <span>
-                    {/* <Time date={new Date()} /> */}
-                    13:03
+                     {/* <Time date={message.created_at} /> */}
+                     {getMessageTime(message.created_at)}
                 </span>
             </div>
             <div className="dialogs__item-info-bottom">
-                <p>Some text in this message</p>
-                <IconReaded isMe={true} isReaded={false} />
+                <p>{message.text}</p>
+                { isMe && <IconReaded isMe={true} isReaded={false} />}
                  {unreaded > 0 && <div className="dialogs__item-info-bottom-count">{unreaded > 9 ? "+9" : unreaded}</div>}
             </div>
         </div>
