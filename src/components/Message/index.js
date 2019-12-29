@@ -8,7 +8,7 @@ import waveSvg from "assets/img/wave.svg"
 import pauseSvg from "assets/img/pause.svg"
 import playSvg from "assets/img/play.svg"
 
-import { Time, IconReaded } from "../";
+import { Time, IconReaded, Avatar } from "../";
 
 
 import "./Message.scss";
@@ -99,7 +99,7 @@ const Message = ({
           <div className="message__content">
               <IconReaded isMe={isMe} isReaded={isReaded} />
               <div className="message__avatar">
-                  <img src={avatar} alt={`Avatar ${user.fullName}`} />
+                  <Avatar user={user}/>
               </div>
               <div className="message__info">
                   {(audio || text || isTyping ) && (<div className="message__bubble">
@@ -115,8 +115,8 @@ const Message = ({
                   )}
                   {attachments && (
                     <div className="message__attachments">
-                      {attachments.map(item => (
-                          <div className="message__attachments-item">
+                      {attachments.map((item, index) => (
+                          <div key={index} className="message__attachments-item">
                               <img src={item.url} alt={item.filename} />
                           </div>
                       ))}
@@ -139,7 +139,7 @@ Message.defaultProps = {
 Message.propTypes = {
     avatar: PropTypes.string,
     text: PropTypes.string,
-    date: PropTypes.string,
+    // date: PropTypes.string,
     avatuserar: PropTypes.object,
     atachments: PropTypes.array,
     isTyping: PropTypes.bool,

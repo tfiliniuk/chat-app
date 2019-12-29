@@ -24,3 +24,23 @@ html,
   position: relative;
   overflow: hidden;
 }
+
+.ant-btn-circle {
+  border: 0;
+  box-shadow: none;
+  color: #202020 !important;
+  cursor: pointer;
+  &:after {
+    display: none;
+  }
+  &:hover {
+    i.anticon {
+      opacity: 1;
+    }
+  }
+
+  i.anticon {
+    font-size: 20px;
+    opacity: 0.5;
+  }
+}

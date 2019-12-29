@@ -1,0 +1,10 @@
+.messages {
+  height: 100%;
+  overflow: auto;
+  max-height: 738px;
+  &--loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

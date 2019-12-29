@@ -1,22 +1,37 @@
 import React from "react";
 import classNames from "classnames";
-import { Time, IconReaded, Avatar } from  "../";
-import { format } from "date-fns";
+import { IconReaded, Avatar } from  "../";
+import { format, parseISO } from "date-fns";
 
 import isToday from "date-fns/isToday";
 
 // import "./DialogItem.scss";
 
 const getMessageTime = created_at => {
-    if(isToday(created_at)) {
-        return format( new Date(created_at), 'kk:mm');
+  let date = parseISO(new Date(created_at).toISOString());
+    if(isToday(date)) {
+        return format( date, 'kk:mm');
     } else {
-      return format( new Date(created_at), 'dd.MM.yyyy');
+      return format(date, 'yyyy-LL-dd');
     }
 }
 
-const DialogItem = ({user, message, unreaded, isMe}) => (
-    <div className={classNames("dialogs__item", {"dialogs__item--online": user.isOnline})}>
+const DialogItem = ({
+  _id,
+  user,
+  message,
+  unreaded,
+  isMe,
+  currentDialogId,
+  onSelect
+}) => (
+    <div
+      className={classNames("dialogs__item", {
+        "dialogs__item--online": user.isOnline,
+        "active": currentDialogId === _id
+      })}
+      onClick={onSelect.bind(this, _id)}
+      >
         <div className="dialogs__item-avatar">
             <Avatar user={user}/>
         </div>
